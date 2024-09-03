@@ -9,14 +9,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getClient = getClient;
-const pg_1 = require("pg");
-function getClient() {
+const index_1 = require("./index");
+function insertData() {
     return __awaiter(this, void 0, void 0, function* () {
-        const client = new pg_1.Client({
-            connectionString: "postgresql://postgres:mysecretpassword@localhost/postgres"
-        });
-        yield client.connect();
-        return client;
+        const client = yield (0, index_1.getClient)();
+        try {
+            yield client.query(`
+            INSERT INTO users (username, email, password)
+            VALUES ('jJohnDoe', 'johndoe@gmail.com', 'password123');
+        `);
+        }
+        catch (error) {
+            console.error("Error inserting data", error);
+        }
     });
 }
+insertData();
