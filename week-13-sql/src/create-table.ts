@@ -1,6 +1,8 @@
 import { getClient } from "./utils";
 
 async function createTable() {
+    const client = await getClient();
+    //users Table
     const createUserTableQuery = `
         CREATE TABLE users (
             id SERIAL PRIMARY KEY,
@@ -8,11 +10,9 @@ async function createTable() {
             password VARCHAR(255) NOT NULL
         );
     `;
-
-    const client = await getClient();
-
     await client.query(createUserTableQuery);
 
+    //todos Table
     const createTodosQuery = `
         CREATE TABLE todos (
             id SERIAL PRIMARY KEY,
@@ -22,8 +22,6 @@ async function createTable() {
             done BOOLEAN DEFAULT FALSE
         );
     `;
-
-
     await client.query(createTodosQuery);
 
     console.log("Table created successfully!");
@@ -31,4 +29,4 @@ async function createTable() {
 
 
 
-createTable();
+createTable(); 
